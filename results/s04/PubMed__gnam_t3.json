@@ -1,0 +1,16 @@
+{
+ "ds": "PubMed",
+ "model": "gnam_t3",
+ "label": "supplementary, post-review",
+ "cfg": {
+  "lr": 0.027,
+  "wd": 0.0004,
+  "R": 5,
+  "theta": 3.8,
+  "M": 100
+ },
+ "val_t3": 0.8097895383834839,
+ "val_s02": 0.8861273527145386,
+ "status": "ok",
+ "sec": 1134.5379078388214
+}

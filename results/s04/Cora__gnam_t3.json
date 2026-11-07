@@ -1,0 +1,16 @@
+{
+ "ds": "Cora",
+ "model": "gnam_t3",
+ "label": "supplementary, post-review",
+ "cfg": {
+  "lr": 0.18,
+  "wd": 0.00024,
+  "R": 7,
+  "theta": 2.2,
+  "M": 100
+ },
+ "val_t3": 0.839483380317688,
+ "val_s02": 0.8487085103988647,
+ "status": "ok",
+ "sec": 487.1102886199951
+}

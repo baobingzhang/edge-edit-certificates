@@ -1,0 +1,43 @@
+Cora gnam_t3 ok 487 {'lr': 0.18, 'wd': 0.00024, 'R': 7, 'theta': 2.2, 'M': 100} 
+CiteSeer gnam_t3 ok 1541 {'lr': 0.51, 'wd': 0.00031, 'R': 5, 'theta': 2.5, 'M': 100} 
+PubMed gnam_t3 ok 1135 {'lr': 0.027, 'wd': 0.0004, 'R': 5, 'theta': 3.8, 'M': 100} 
+Cornell gnam_t3 ok 72 {'lr': 0.073, 'wd': 0.00037, 'R': 6, 'theta': 2.9, 'M': 100} 
+Texas certmlp ok 212 {'lr': 0.01, 'wd': 0.0005, 'hidden': 64, 'drop': 0.5} 
+Texas certmlprob ok 199 {'lr': 0.01, 'wd': 0.0005, 'hidden': 64, 'drop': 0.5, 'B': 1, 'rlr': 0.0001} 
+Wisconsin certmlp ok 184 {'lr': 0.01, 'wd': 0.0005, 'hidden': 64, 'drop': 0.5} 
+Wisconsin certmlprob ok 187 {'lr': 0.01, 'wd': 0.0005, 'hidden': 64, 'drop': 0.5, 'B': 1, 'rlr': 0.0001} 
+Cornell certmlp ok 171 {'lr': 0.01, 'wd': 1e-05, 'hidden': 64, 'drop': 0.2} 
+Cornell certmlprob ok 151 {'lr': 0.01, 'wd': 1e-05, 'hidden': 64, 'drop': 0.2, 'B': 2, 'rlr': 0.001} 
+Cora certmlp ok 324 {'lr': 0.01, 'wd': 1e-05, 'hidden': 64, 'drop': 0.5} 
+Cora certmlprob ok 292 {'lr': 0.01, 'wd': 1e-05, 'hidden': 64, 'drop': 0.5, 'B': 1, 'rlr': 0.001} 
+CiteSeer certmlp ok 305 {'lr': 0.001, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5} 
+CiteSeer certmlprob ok 167 {'lr': 0.001, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5, 'B': 2, 'rlr': 0.001} 
+Actor certmlp ok 48 {'lr': 0.01, 'wd': 1e-05, 'hidden': 64, 'drop': 0.2} 
+Actor certmlprob ok 212 {'lr': 0.01, 'wd': 1e-05, 'hidden': 64, 'drop': 0.2, 'B': 2, 'rlr': 0.001} 
+minesweeper certmlp ok 192 {'lr': 0.001, 'wd': 1e-05, 'hidden': 64, 'drop': 0.5} 
+minesweeper certmlprob ok 158 {'lr': 0.001, 'wd': 1e-05, 'hidden': 64, 'drop': 0.5, 'B': 2, 'rlr': 0.001} 
+tolokers certmlp ok 238 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5} 
+tolokers certmlprob ok 209 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5, 'B': 2, 'rlr': 0.001} 
+amazon-ratings certmlp ok 239 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5} 
+amazon-ratings certmlprob ok 317 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5, 'B': 2, 'rlr': 0.001} 
+roman-empire certmlp ok 296 {'lr': 0.01, 'wd': 0.0005, 'hidden': 256, 'drop': 0.5} 
+roman-empire certmlprob ok 2232 {'lr': 0.01, 'wd': 0.0005, 'hidden': 256, 'drop': 0.5, 'B': 1, 'rlr': 0.001} 
+PubMed certmlp ok 168 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5} 
+PubMed certmlprob ok 253 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5, 'B': 2, 'rlr': 0.001} 
+Texas smoothsage ok 179 {'lr': 0.01, 'wd': 0.0005, 'hidden': 256, 'drop': 0.2, 'pa': 0.01713995640359521, 'pd': 0.95, 'kind': 'sage'} 
+Wisconsin smoothsage ok 176 {'lr': 0.01, 'wd': 0.0005, 'hidden': 64, 'drop': 0.2, 'pa': 0.029078903509468103, 'pd': 0.8, 'kind': 'sage'} 
+Cornell smoothsage ok 176 {'lr': 0.01, 'wd': 0.0005, 'hidden': 256, 'drop': 0.2, 'pa': 0.016632327032757025, 'pd': 0.8, 'kind': 'sage'} 
+Cora smoothsage ok 341 {'lr': 0.01, 'wd': 0.0005, 'hidden': 256, 'drop': 0.2, 'pa': 0.00035986703874291175, 'pd': 0.8, 'kind': 'sage'} 
+CiteSeer smoothsage ok 687 {'lr': 0.01, 'wd': 0.0005, 'hidden': 64, 'drop': 0.5, 'pa': 0.0008224824642022728, 'pd': 0.95, 'kind': 'sage'} 
+Actor smoothsage ok 758 {'lr': 0.01, 'wd': 0.0005, 'hidden': 64, 'drop': 0.2, 'pa': 0.0009247056786703601, 'pd': 0.95, 'kind': 'sage'} 
+minesweeper smoothsage ok 507 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.2, 'pa': 0.0007880399999999999, 'pd': 0.8, 'kind': 'sage'} 
+tolokers smoothsage ok 6930 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.2, 'pa': 0.015016213604741604, 'pd': 0.8, 'kind': 'sage'} 
+amazon-ratings smoothsage ok 1941 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.2, 'pa': 0.0003102400570545635, 'pd': 0.95, 'kind': 'sage'} 
+roman-empire smoothsage ok 762 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.5, 'pa': 3.205720818364379e-05, 'pd': 0.95, 'kind': 'sage'} 
+PubMed smoothsage ok 2190 {'lr': 0.01, 'wd': 1e-05, 'hidden': 256, 'drop': 0.2, 'pa': 0.0004560550453007022, 'pd': 0.8, 'kind': 'sage'} 
+  Best Test Accuracy: 0.3220
+  Best Test Accuracy: 0.3190
+  Best Test Accuracy: 0.3180
+  Best Test Accuracy: 0.3150
+  Best Test Accuracy: 0.3480
+S04_DONE

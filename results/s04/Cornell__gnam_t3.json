@@ -1,0 +1,16 @@
+{
+ "ds": "Cornell",
+ "model": "gnam_t3",
+ "label": "supplementary, post-review",
+ "cfg": {
+  "lr": 0.073,
+  "wd": 0.00037,
+  "R": 6,
+  "theta": 2.9,
+  "M": 100
+ },
+ "val_t3": 0.6779661178588867,
+ "val_s02": 0.7627118825912476,
+ "status": "ok",
+ "sec": 72.48159718513489
+}

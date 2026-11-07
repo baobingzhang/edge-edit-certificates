@@ -1,0 +1,19 @@
+\begin{table*}[!t]
+\centering\scriptsize
+\caption{Certified accuracy at $b=1$ by degree of the test node, in percent, over splits 3--5. Strata with fewer than 30 nodes are omitted. For degree $\le1$ a single edit can remove every neighbour.}\label{tab:degree}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lccccccccccc}
+\toprule
+ & Cora & CiteSeer & PubMed & Texas & Wisconsin & Cornell & Actor & Roman & Amazon & Mines. & Tolok. \\
+\midrule
+CertGAM, degree $\le1$ & 12 & 21 & 41 & 0 & 27 & 42 & 4 & -- & -- & -- & 32 \\
+CertGAM, degree 2--3 & 53 & 55 & 69 & 17 & 69 & 59 & 6 & 46 & -- & -- & 60 \\
+CertGAM, degree 4--7 & 74 & 71 & 81 & -- & 66 & -- & 13 & 29 & 6 & 48 & 69 \\
+CertGAM, degree $\ge8$ & 74 & 81 & 84 & -- & -- & -- & 23 & -- & 18 & 65 & 75 \\
+CertGAM-R, degree $\le1$ & 65 & 64 & 86 & 82 & 86 & 78 & 29 & -- & -- & -- & 55 \\
+CertGAM-R, degree 2--3 & 73 & 69 & 88 & 88 & 86 & 72 & 30 & 69 & -- & -- & 76 \\
+CertGAM-R, degree 4--7 & 81 & 73 & 85 & -- & 71 & -- & 33 & 44 & 34 & 73 & 82 \\
+CertGAM-R, degree $\ge8$ & 72 & 79 & 85 & -- & -- & -- & 33 & -- & 35 & 78 & 77 \\
+\bottomrule
+\end{tabular}}
+\end{table*}

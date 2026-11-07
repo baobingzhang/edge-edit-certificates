@@ -1,0 +1,69 @@
+{
+ "status": "PASS",
+ "cases": [
+  {
+   "ds": "Texas",
+   "alpha": 0.1,
+   "chunk": 4000000,
+   "max_value_diff": 5.587935447692871e-09,
+   "max_grad_diff": 4.76837158203125e-07,
+   "grad_scale": 6.504014015197754
+  },
+  {
+   "ds": "Texas",
+   "alpha": 0.1,
+   "chunk": 8124,
+   "max_value_diff": 5.960464477539063e-08,
+   "max_grad_diff": 4.76837158203125e-07,
+   "grad_scale": 6.504014015197754
+  },
+  {
+   "ds": "Texas",
+   "alpha": 0.85,
+   "chunk": 4000000,
+   "max_value_diff": 7.152557373046875e-07,
+   "max_grad_diff": 2.4318695068359375e-05,
+   "grad_scale": 7.140914440155029
+  },
+  {
+   "ds": "Texas",
+   "alpha": 0.85,
+   "chunk": 8124,
+   "max_value_diff": 7.152557373046875e-07,
+   "max_grad_diff": 2.4318695068359375e-05,
+   "grad_scale": 7.140914440155029
+  },
+  {
+   "ds": "Cora",
+   "alpha": 0.1,
+   "chunk": 4000000,
+   "max_value_diff": 4.76837158203125e-07,
+   "max_grad_diff": 1.9073486328125e-06,
+   "grad_scale": 9.160581588745117
+  },
+  {
+   "ds": "Cora",
+   "alpha": 0.1,
+   "chunk": 8124,
+   "max_value_diff": 4.76837158203125e-07,
+   "max_grad_diff": 1.1920928955078125e-06,
+   "grad_scale": 9.160581588745117
+  },
+  {
+   "ds": "Cora",
+   "alpha": 0.85,
+   "chunk": 4000000,
+   "max_value_diff": 1.430511474609375e-06,
+   "max_grad_diff": 0.0002818107604980469,
+   "grad_scale": 27.34651756286621
+  },
+  {
+   "ds": "Cora",
+   "alpha": 0.85,
+   "chunk": 8124,
+   "max_value_diff": 1.430511474609375e-06,
+   "max_grad_diff": 0.00028228759765625,
+   "grad_scale": 27.34651756286621
+  }
+ ]
+}

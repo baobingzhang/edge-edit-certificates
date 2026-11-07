@@ -1,0 +1,14 @@
+\begin{table*}[!t]
+\centering\scriptsize
+\caption{Spearman correlation between certified radius and degree, and the neighbour share of score variation, $\mathrm{std}(S^1)/(\mathrm{std}(S^0)+\mathrm{std}(S^1))$.}\label{tab:attr}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lccccccccccc}
+\toprule
+ & Cora & CiteSeer & PubMed & Texas & Wisconsin & Cornell & Actor & Roman & Amazon & Mines. & Tolok. \\
+\midrule
+Spearman(radius, degree) & 0.61 & 0.64 & 0.68 & 0.47 & 0.60 & 0.50 & 0.48 & -0.00 & 0.33 & 0.10 & 0.54 \\
+Neighbour share, CertGAM & 0.47 & 0.46 & 0.32 & 0.44 & 0.33 & 0.29 & 0.34 & 0.41 & 0.51 & 0.66 & 0.37 \\
+Neighbour share, CertGAM-R & 0.21 & 0.11 & 0.06 & 0.03 & 0.21 & 0.10 & 0.08 & 0.10 & 0.24 & 0.62 & 0.25 \\
+\bottomrule
+\end{tabular}}
+\end{table*}

@@ -1,0 +1,15 @@
+\begin{table*}[!t]
+\centering\scriptsize
+\caption{Certified explanations at $b=1$ on at most 200 test nodes per split. ``Top-1'' fixes the class at the clean prediction; ``Joint'' also requires the prediction to be certified. A graph-free model is trivially stable under both, since its attributions ignore the graph.}\label{tab:joint}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lccccccccccc}
+\toprule
+ & Cora & CiteSeer & PubMed & Texas & Wisconsin & Cornell & Actor & Roman & Amazon & Mines. & Tolok. \\
+\midrule
+Top-1, CertGAM & 59.3 & 60.7 & 62.6 & 61.0 & 58.3 & 65.3 & 62.1 & 42.0 & 27.8 & 85.1 & 81.9 \\
+Joint, CertGAM & 39.9 & 35.4 & 44.4 & 23.6 & 40.1 & 42.5 & 21.9 & 26.9 & 7.6 & 57.2 & 76.0 \\
+Top-1, CertGAM-R & 86.2 & 91.4 & 92.3 & 98.1 & 84.0 & 87.3 & 93.3 & 79.4 & 69.4 & 36.1 & 78.8 \\
+Joint, CertGAM-R & 76.3 & 84.2 & 89.9 & 96.5 & 80.1 & 82.6 & 85.6 & 73.7 & 57.9 & 30.4 & 76.8 \\
+\bottomrule
+\end{tabular}}
+\end{table*}

@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><title>计划 v3 增补</title>
+<style>body{max-width:980px;margin:2em auto;padding:0 1em;font:16px/1.75 sans-serif}td,th{border:1px solid #ccc;padding:.45em;vertical-align:top}table{border-collapse:collapse;width:100%}</style></head><body>
+<h1>计划 v3 增补（与 PLAN_v2 同时生效，冲突时以本文件为准）</h1>
+<p>冻结于 2026-11-04，S03 开始之前。原因：探索阶段发现不用图的模型认证半径为无穷大，在验证集 1 次编辑时几乎总是认证准确率最高（<code>results/trivial_check.json</code>）。v2 的 H2 只与随机平滑比较，即使通过也会误导。组合回退分类器定理成立但实际增益很小（<code>results/fallback_check.json</code>），记为负面结果，不作主线。</p>
+<h2>新增硬规则</h2>
+<ul><li>所有认证表和图必须列出逻辑回归、MLP、ego-GAM 这三个不用图的模型，其认证准确率等于无攻击准确率且对所有预算成立。</li>
+<li>摘要和结论必须写明这一事实。不得声称 CertGAM 的认证准确率普遍优于不用图的模型。</li>
+<li>H2 降为次要结论，只说明“在用图模型内部优于平滑”。</li></ul>
+<h2>新增假设（S03 判定）</h2>
+<p>定义：攻击比例 π 下的期望准确率 A(π)=(1−π)·clean+π·cert_b。盈亏平衡 π* 是模型 A(π) 降到“最佳不用图模型准确率”时的 π，上限 1；若 clean 不高于不用图模型则 π*=0。“图有用”的数据集：G 模型 clean 比最佳不用图模型高至少 3 个百分点。不用图模型的选择只依据验证集。</p>
+<table><tr><th>编号</th><th>假设</th><th>通过条件</th><th>未通过时</th></tr>
+<tr><td>H8</td><td>认证训练的 CertGAM 在 b=1 下仍值得用图</td><td>图有用的数据集中至少一半 π*≥0.5</td><td>转 ALT-4，主张收缩为“精确工具与代价刻画”</td></tr>
+<tr><td>H9</td><td>认证训练扩大盈亏平衡范围</td><td>图有用的数据集中至少 2/3，认证训练的 π* 大于普通训练，配对 Wilcoxon p&lt;0.05（数据集数≥6 时才检验，否则只报告）</td><td>删除该主张</td></tr>
+<tr><td>H10</td><td>度数决定脆弱性</td><td>至少 2/3 的数据集上，节点认证半径与度的 Spearman 相关 &gt;0.2</td><td>删除物理图像，如实报告</td></tr></table>
+<h2>其他修正</h2>
+<ul><li>Planetoid 的假设判定用 10 个随机 60/20/20 划分（使用其中 3–9），公开划分单独报告。</li>
+<li>H3 中的 G-NAMRFF 比较：大图只能用较小配置预算。预算差异和超时如实披露，缺失的数据集不计入通过统计，并写明数量。</li>
+<li>认证训练的“全局最优”只能写目标函数凸；实际求解是次梯度法，未证明达到最优，报告多起点目标差。</li>
+<li>认证训练配置用验证集 0.5·clean+0.5·c1 选择。</li></ul>
+</body></html>

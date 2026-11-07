@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8"><title>计划 v8c 增补</title>
+<style>body{max-width:980px;margin:2em auto;padding:0 1em;font:16px/1.75 sans-serif}td,th{border:1px solid #ccc;padding:.45em;vertical-align:top}table{border-collapse:collapse;width:100%}</style></head><body>
+<h1>计划 v8c 增补：E10 两个数据集运行失败后的实现修复</h1>
+<p>冻结于 2026-11-07，在重跑之前写定。PLAN_v8 与 v8b 的假设、阈值、网格、选择准则和计时规则一律不变。</p>
+
+<h2>发生了什么（如实记录）</h2>
+<table>
+<tr><th>数据集</th><th>失败</th><th>原因</th></tr>
+<tr><td>roman-empire</td><td>计时阶段 GPU 显存不足（8 GB 卡）</td><td>18 个类别共 306 个类别对；鲁棒损失对全部类别对一次性做 PPR 迭代，autograd 保存了每一步的中间张量。</td></tr>
+<tr><td>amazon-ratings</td><td>网格训练中策略迭代 200 次未收敛</td><td>收敛判据只看策略是否完全相同；价值相同的并列策略之间来回切换，会一直不停。</td></tr>
+</table>
+<p>两者都是实现问题，与模型和威胁模型无关。已完成的 9 个数据集结果不重跑，保持原样。</p>
+
+<h2>修复（code/ppr.py）</h2>
+<ul>
+<li>策略迭代：增加一个停止条件。价值在策略迭代下单调不减；若新一轮价值相对上一轮的最大增量 ≤ 1e-8·(1+max|V|)，说明上一轮策略已是最优，切换只发生在并列策略之间，此时停止。原有判据（策略完全相同）保留。</li>
+<li>鲁棒损失 adv_logits：按类别对分块（与证书相同的块大小规则），并用手写的反向传播（转置的同一级数）代替保存迭代图。数学上不变。</li>
+</ul>
+
+<h2>闸门 G10c</h2>
+<p>修复后的 adv_logits 与产生已有 E10 结果的旧版本（results/ppr_at_s09.py，哈希与 code_at_s09.sha256 一致）在 Texas、Cora，α∈{0.1, 0.85}，单块与多块下比较最坏情形 logits 与对 H 的梯度；结果写入 results/g10c.json。G10 与 G10b 用修复后的代码重跑。任一项不通过则不重跑。</p>
+
+<h2>重跑与判定</h2>
+<ul>
+<li>只重跑 roman-empire 和 amazon-ratings 的 E10，设定与 PLAN_v8 完全相同（包括计时规则：若鲁棒配置预计超过 2 小时，只跑 CE）。</li>
+<li>若重跑仍失败，该数据集记为失败，不再修改；H18、H19 的条件要求 9 个非平凡数据集都有结果，因此会判为不通过，论文如实写明。</li>
+<li>论文中写明：这两个数据集是在实现修复之后重跑的，修复内容如上。</li>
+</ul>
+</body></html>

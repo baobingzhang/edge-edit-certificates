@@ -1,0 +1,19 @@
+\begin{table*}[!t]
+\centering\scriptsize
+\caption{ShrinkGAM-R (pseudo-count $\kappa$ selected on validation data of split 0, CertGAM-R hyperparameters otherwise) against CertGAM-R retrained by the ShrinkGAM code ($\kappa=0$), in percent, splits 3--9, exact certificates on at most 2000 test nodes per split. Hypotheses H14--H16 were fixed before these runs. Gains are $b=1$ certified accuracy of ShrinkGAM-R minus $\kappa=0$ within a degree stratum, shown when the stratum has at least 30 nodes. Graph-free is the validation-selected graph-free reference.}\label{tab:shrink}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lccccccccccc}
+\toprule
+ & Cora & CiteSeer & PubMed & Texas & Wisconsin & Cornell & Actor & Roman & Amazon & Mines. & Tolok. \\
+\midrule
+Selected $\kappa$ & 0.5 & 16 & 16 & 0 & 0 & 0 & 16 & 1 & 16 & 0.5 & 2 \\
+ShrinkGAM-R clean & 79.8$\pm$1.6 & 71.6$\pm$1.3 & 88.3$\pm$0.3 & 79.5$\pm$6.3 & 85.7$\pm$3.1 & 73.0$\pm$6.1 & 34.7$\pm$1.0 & 66.4$\pm$0.6 & 38.9$\pm$0.4 & 81.8$\pm$0.3 & 79.0$\pm$0.4 \\
+$\kappa=0$ clean & 80.9$\pm$1.7 & 72.2$\pm$1.2 & 88.2$\pm$0.3 & 79.5$\pm$6.3 & 85.7$\pm$3.1 & 73.0$\pm$6.1 & 34.6$\pm$0.9 & 66.7$\pm$0.6 & 39.6$\pm$0.5 & 81.8$\pm$0.3 & 79.0$\pm$0.4 \\
+ShrinkGAM-R $b=1$ & 73.6$\pm$0.9 & 71.4$\pm$1.3 & 88.3$\pm$0.8 & 78.8$\pm$7.0 & 82.6$\pm$2.9 & 71.0$\pm$6.1 & 34.4$\pm$1.0 & 63.6$\pm$1.1 & 36.8$\pm$0.9 & 77.6$\pm$0.5 & 76.3$\pm$0.6 \\
+$\kappa=0$ $b=1$ & 73.6$\pm$0.7 & 68.0$\pm$1.0 & 86.8$\pm$0.7 & 78.8$\pm$7.0 & 82.6$\pm$2.9 & 71.0$\pm$6.1 & 31.9$\pm$1.2 & 63.0$\pm$1.0 & 33.8$\pm$0.9 & 77.7$\pm$0.5 & 76.8$\pm$0.6 \\
+Graph-free & 74.5 & 73.6 & 88.4 & 77.2 & 85.4 & 74.5 & 35.5 & 65.9 & 47.8 & 80.0 & 78.2 \\
+Gain, degree $\le1$ & +1.5 & +5.0 & +2.2 & +0.0 & +0.0 & +0.0 & +4.8 & -- & -- & -- & -1.4 \\
+Gain, degree 4--7 & -0.2 & +2.0 & +0.8 & -- & +0.0 & +0.0 & +1.3 & +0.4 & +3.8 & +1.1 & -1.0 \\
+\bottomrule
+\end{tabular}}
+\end{table*}

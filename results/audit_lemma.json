@@ -1,0 +1,58 @@
+[
+ {
+  "R": 1,
+  "n": 1500,
+  "printed_zero": true,
+  "min_ratio": null,
+  "median_ratio": null,
+  "laplacian_bound_violations": 0
+ },
+ {
+  "R": 2,
+  "n": 1500,
+  "printed_zero": false,
+  "min_ratio": 16.143161312105605,
+  "median_ratio": 26.9522878974227,
+  "laplacian_bound_violations": 0
+ },
+ {
+  "R": 3,
+  "n": 1500,
+  "printed_zero": false,
+  "min_ratio": 8.150465020084829,
+  "median_ratio": 16.325129111911675,
+  "laplacian_bound_violations": 0
+ },
+ {
+  "R": 4,
+  "n": 1500,
+  "printed_zero": false,
+  "min_ratio": 6.410818019454301,
+  "median_ratio": 15.06463021547081,
+  "laplacian_bound_violations": 0
+ },
+ {
+  "R": 5,
+  "n": 1500,
+  "printed_zero": false,
+  "min_ratio": 4.311310691327357,
+  "median_ratio": 15.303068202646186,
+  "laplacian_bound_violations": 0
+ },
+ {
+  "R": 6,
+  "n": 1500,
+  "printed_zero": false,
+  "min_ratio": 7.782494283831454,
+  "median_ratio": 17.82147883583648,
+  "laplacian_bound_violations": 0
+ },
+ {
+  "R": 7,
+  "n": 1500,
+  "printed_zero": false,
+  "min_ratio": 7.505716119994374,
+  "median_ratio": 21.76014393421059,
+  "laplacian_bound_violations": 0
+ }
+]

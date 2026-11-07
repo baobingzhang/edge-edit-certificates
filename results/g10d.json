@@ -1,0 +1,89 @@
+{
+ "status": "PASS",
+ "cases": [
+  {
+   "ds": "Texas",
+   "alpha": 0.1,
+   "chunk": 97,
+   "nodes": 183,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "Texas",
+   "alpha": 0.1,
+   "chunk": 1000,
+   "nodes": 183,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "Texas",
+   "alpha": 0.85,
+   "chunk": 97,
+   "nodes": 183,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "Texas",
+   "alpha": 0.85,
+   "chunk": 1000,
+   "nodes": 183,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "Cora",
+   "alpha": 0.1,
+   "chunk": 97,
+   "nodes": 301,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "Cora",
+   "alpha": 0.1,
+   "chunk": 1000,
+   "nodes": 301,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "Cora",
+   "alpha": 0.85,
+   "chunk": 97,
+   "nodes": 301,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "Cora",
+   "alpha": 0.85,
+   "chunk": 1000,
+   "nodes": 301,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "CiteSeer",
+   "alpha": 0.1,
+   "chunk": 97,
+   "nodes": 303,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "CiteSeer",
+   "alpha": 0.1,
+   "chunk": 1000,
+   "nodes": 303,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "CiteSeer",
+   "alpha": 0.85,
+   "chunk": 97,
+   "nodes": 303,
+   "max_diff": 0.0
+  },
+  {
+   "ds": "CiteSeer",
+   "alpha": 0.85,
+   "chunk": 1000,
+   "nodes": 303,
+   "max_diff": 0.0
+  }
+ ]
+}

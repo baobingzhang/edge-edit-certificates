@@ -1,0 +1,143 @@
+{
+ "Texas": {
+  "ego_only_clean_equals_all_radii": 0.831,
+  "plain": {
+   "clean": 0.881,
+   "c1": 0.576,
+   "c2": 0.203,
+   "c3": 0.068,
+   "c5": 0.017,
+   "graph_share": 0.356
+  },
+  "robustB1": {
+   "clean": 0.763,
+   "c1": 0.695,
+   "c2": 0.475,
+   "c3": 0.356,
+   "c5": 0.339,
+   "graph_share": 0.261
+  },
+  "robustB2": {
+   "clean": 0.797,
+   "c1": 0.712,
+   "c2": 0.627,
+   "c3": 0.576,
+   "c5": 0.508,
+   "graph_share": 0.176
+  }
+ },
+ "Wisconsin": {
+  "ego_only_clean_equals_all_radii": 0.825,
+  "plain": {
+   "clean": 0.812,
+   "c1": 0.5,
+   "c2": 0.287,
+   "c3": 0.125,
+   "c5": 0.062,
+   "graph_share": 0.369
+  },
+  "robustB1": {
+   "clean": 0.825,
+   "c1": 0.738,
+   "c2": 0.537,
+   "c3": 0.425,
+   "c5": 0.287,
+   "graph_share": 0.258
+  },
+  "robustB2": {
+   "clean": 0.863,
+   "c1": 0.85,
+   "c2": 0.825,
+   "c3": 0.8,
+   "c5": 0.762,
+   "graph_share": 0.192
+  }
+ },
+ "Cornell": {
+  "ego_only_clean_equals_all_radii": 0.831,
+  "plain": {
+   "clean": 0.831,
+   "c1": 0.559,
+   "c2": 0.339,
+   "c3": 0.153,
+   "c5": 0.051,
+   "graph_share": 0.348
+  },
+  "robustB1": {
+   "clean": 0.831,
+   "c1": 0.763,
+   "c2": 0.678,
+   "c3": 0.644,
+   "c5": 0.576,
+   "graph_share": 0.227
+  },
+  "robustB2": {
+   "clean": 0.814,
+   "c1": 0.78,
+   "c2": 0.712,
+   "c3": 0.712,
+   "c5": 0.678,
+   "graph_share": 0.148
+  }
+ },
+ "Cora": {
+  "ego_only_clean_equals_all_radii": 0.52,
+  "plain": {
+   "clean": 0.728,
+   "c1": 0.348,
+   "c2": 0.208,
+   "c3": 0.124,
+   "c5": 0.054,
+   "graph_share": 0.441
+  },
+  "robustB1": {
+   "clean": 0.654,
+   "c1": 0.494,
+   "c2": 0.382,
+   "c3": 0.296,
+   "c5": 0.222,
+   "graph_share": 0.239
+  },
+  "robustB2": {
+   "clean": 0.558,
+   "c1": 0.506,
+   "c2": 0.476,
+   "c3": 0.454,
+   "c5": 0.428,
+   "graph_share": 0.074
+  }
+ },
+ "Actor": {
+  "ego_only_clean_equals_all_radii": 0.353,
+  "plain": {
+   "clean": 0.359,
+   "c1": 0.128,
+   "c2": 0.079,
+   "c3": 0.054,
+   "c5": 0.039,
+   "graph_share": 0.342
+  }
+ },
+ "minesweeper": {
+  "ego_only_clean_equals_all_radii": 0.796,
+  "plain": {
+   "clean": 0.827,
+   "c1": 0.612,
+   "c2": 0.371,
+   "c3": 0.157,
+   "c5": 0.008,
+   "graph_share": 0.68
+  }
+ },
+ "roman-empire": {
+  "ego_only_clean_equals_all_radii": 0.648,
+  "plain": {
+   "clean": 0.756,
+   "c1": 0.428,
+   "c2": 0.283,
+   "c3": 0.117,
+   "c5": 0.001,
+   "graph_share": 0.405
+  }
+ }
+}

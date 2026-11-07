@@ -1,0 +1,16 @@
+{
+ "ds": "CiteSeer",
+ "model": "gnam_t3",
+ "label": "supplementary, post-review",
+ "cfg": {
+  "lr": 0.51,
+  "wd": 0.00031,
+  "R": 5,
+  "theta": 2.5,
+  "M": 100
+ },
+ "val_t3": 0.6691729426383972,
+ "val_s02": 0.7413533926010132,
+ "status": "ok",
+ "sec": 1540.6883299350739
+}

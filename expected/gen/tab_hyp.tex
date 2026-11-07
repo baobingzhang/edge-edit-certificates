@@ -1,0 +1,31 @@
+\begin{table*}[!t]
+\centering\scriptsize
+\caption{Pre-specified hypotheses. Thresholds were fixed in dated plans before the corresponding runs; H11--H12, H14--H16 and H18--H20 (with H18e, H20e) were added later, each before the corresponding runs. H13 and all supplementary analyses are descriptive.}\label{tab:hyp}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllll l}
+\toprule
+ & Claim & Threshold & Result & Outcome & Caveat \\
+\midrule
+H1 & Certificates never broken by real edits & 0 breaks & 0 of 1,058,558 edits & passed &  \\
+H2 & Certified accuracy above Smooth-GCN, $b=1$ & $\ge7/11$, Wilcoxon $p<0.05$ & 9/11, $p=0.0068$ & passed & reversed by Smooth-SAGE (suppl.) \\
+H3 & Small cost vs GCN; beats G-NAMRFF on heterophily & median gap $\le5$; $\ge6/8$, $p<0.05$ & -3.8; 6/8, $p=0.039$ & passed & GCN weak on heterophily \\
+H4 & Certified training raises $b=1$ accuracy & $\ge6$ datasets, $+3$ points & 6/11 & passed & exactly at threshold \\
+H5 & Top-1 attribution certified & $\ge$ half the datasets & 9/11 & passed & absolute part only \\
+H6 & Deterministic certificate 100$\times$ faster & median $\ge100\times$ & 18$\times$ & not met &  \\
+H7 & Synthetic feature recovery & $\ge0.10$ above G-NAMRFF & 0.73 vs 0.30 & passed & data follow our model \\
+H8 & Graph pays under attack, $\pi^\star\ge0.5$ & $\ge$ half of useful datasets & 2/4 & passed & robust only on Cora \\
+H9 & Certified training raises $\pi^\star$ & $\ge2/3$ of useful datasets & 3/4 & passed & no test, $n<6$ \\
+H10 & Radius correlates with degree & $\rho>0.2$ on $\ge2/3$ & 9/11 & passed &  \\
+H11 & Two-layer SAGE below graph-free, $b=1$ & $\ge7/9$ non-trivial & 9/9 & passed & no robust training \\
+H12 & Degree $\le1$ less certified than 4--7 & $\ge80\%$ of datasets & 7/7 & passed & two-layer SAGE \\
+H14 & Shrinkage raises $b=1$ over $\kappa=0$ & $\ge7/11$, Wilcoxon $p<0.05$ & 6/11, $p=0.027$ & not met & $\kappa=0$ chosen on 3 \\
+H15 & ShrinkGAM-R above graph-free, $b=1$ & $\ge5/9$ non-trivial & 1/9 & not met & Texas already at $\kappa=0$ \\
+H16 & Gain larger at degree $\le1$ than 4--7 & $\ge70\%$ of datasets & 4/7 & not met & zero gains count as no \\
+H18 & $\pi$-PPNP below graph-free, local cert., $b=1$ & $\ge7/9$ non-trivial & 8/8 & not met & roman-empire failed; pre-specified as uninformative \\
+H18e & $\pi$-PPNP below graph-free, exact, $b=1$ & $\ge5/6$ small non-trivial & 6/6 & passed & added after a smoke test on split 1 \\
+H19 & $\pi$-PPNP attack bound below graph-free & $\ge5/9$ non-trivial & 7/8 & not met & roman-empire failed; PubMed above \\
+H20 & Degree $\le1$ less certified (local) & $\ge70\%$ of datasets & 5/7 & passed & local certificate \\
+H20e & Degree $\le1$ less certified (exact) & $\ge70\%$ of datasets & 3/5 & not met &  \\
+\bottomrule
+\end{tabular}}
+\end{table*}

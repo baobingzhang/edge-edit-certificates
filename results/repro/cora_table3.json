@@ -1,0 +1,24 @@
+{
+ "script": "GNAM-RFF-main/scripts/train_node.py unmodified",
+ "dataset": "cora",
+ "args": "--lr 0.18 --weight_decay 2.4e-4 --M 100 --R 7 --theta 2.2 --epochs 1000",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "test": [
+  0.761,
+  0.737,
+  0.758,
+  0.754,
+  0.756
+ ],
+ "mean": 0.7532,
+ "std": 0.008423775875461084,
+ "paper_mean": 0.7984,
+ "paper_std": 0.017,
+ "note": "code uses Adam; paper states AdamW. Environment: torch 2.15, PyG 2.8.1."
+}

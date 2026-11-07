@@ -1,0 +1,11 @@
+--- results/judge_at_freeze.py	2026-11-06 12:10:06.310062733 +0000
++++ code/judge.py	2026-11-05 05:45:38.235651036 +0000
+@@ -74,5 +74,6 @@
+ # H10
+ ok = [d for d in ALL if T[d]["rho"] is not None]; c = sum(T[d]["rho"] > 0.2 for d in ok)
+ V["H10"] = dict(n=len(ok), count=c, passed=len(ok) > 0 and c >= 2 * len(ALL) / 3)
+-json.dump(dict(verdict=V, table=T), open(os.path.join(R, "verdict.json"), "w"), indent=1)
+-print(json.dumps(V, indent=0))
++conv = lambda o: o.item() if hasattr(o, "item") else str(o)
++json.dump(dict(verdict=V, table=T), open(os.path.join(R, "verdict.json"), "w"), indent=1, default=conv)
++print(json.dumps(V, indent=0, default=conv))

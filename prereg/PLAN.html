@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><title>执行计划（冻结版）</title>
+<style>body{max-width:980px;margin:2em auto;font:16px/1.7 sans-serif;padding:0 1em}td,th{border:1px solid #ccc;padding:.45em;vertical-align:top}table{border-collapse:collapse;width:100%}h2{border-bottom:1px solid #ccc}</style></head><body>
+<h1>执行计划（冻结版）</h1>
+<p>冻结于 2026-11-04。本文件的 SHA-256 记录在 <code>PLAN.sha256</code>。这只是本地冻结，不是第三方预注册。冻结前已看到的结果：Cora 上 HopGAM、MLP、GCN、LinFilter 的预实验结果，其余未看。这一点须在最终报告中披露。修改须另写 <code>PLAN_v2.html</code> 并说明原因，v1 保留。</p>
+<h2>阶段划分</h2>
+<table><tr><th>阶段</th><th>数据范围</th><th>允许做什么</th></tr>
+<tr><td>S01 探索</td><td>划分 0–2，或 Planetoid 公开划分</td><td>调试、建立假设。可看测试集，但其结果不进论文主张。</td></tr>
+<tr><td>S02 选型</td><td>同上，只看验证集指标</td><td>决定方法与替代方案。所有方法和基线的配置预算相同（每模型 ≤20 组）。</td></tr>
+<tr><td>S03 确认</td><td>划分 3–9；Planetoid 用新的 10 个随机种子及 10 个随机 60/20/20 划分</td><td>配置冻结后一次跑完，论文主表只来自这里。不再改模型、配置或数据集清单。</td></tr></table>
+<h2>数据集清单（S03 不再增减，下载或显存失败如实记录）</h2>
+<p>Cora、CiteSeer、PubMed、Texas、Wisconsin、Cornell、Actor、roman-empire、amazon-ratings、minesweeper、tolokers；合成数据。图分类（MUTAG、PROTEINS、NCI1、Mutagenicity、PTC_MR）为 G3 的第二部分。</p>
+<h2>基线（同预算）</h2>
+<p>逻辑回归（仅自身特征）、MLP、GCN、GraphSAGE、GAT、G-NAMRFF、GNAN（若算力可行）。</p>
+<h2>冻结阈值</h2>
+<table><tr><th>主张</th><th>通过条件</th><th>未通过时</th></tr>
+<tr><td>C1 G-NAMRFF 实际近线性</td><td>作者配置附近（θ≥1）在 Cora、CiteSeer 上：非线性方差比 &lt;0.05，且线性替换前后测试准确率差 ≤1 个百分点</td><td>删除“退化”主张，改报告实测线性度；T2 仍可作为理论结果。</td></tr>
+<tr><td>C2 紧凑不损精度</td><td>S03 上 Cora、CiteSeer、PubMed 的 HopGAM 参数 ≤G-NAMRFF 的 1/5，且平均准确率不低于 G-NAMRFF 超过 1 个百分点</td><td>替代 ALT-A。</td></tr>
+<tr><td>C3 异配图优于 G-NAMRFF</td><td>S03 上 8 个异配数据集中至少 6 个均值更高，且配对 Wilcoxon（按数据集）p&lt;0.05</td><td>替代 ALT-B。</td></tr>
+<tr><td>C4 归因恢复</td><td>合成数据上特征 top-k 恢复率与跳数恢复准确率，均比 G-NAMRFF 高至少 0.10</td><td>删除该主张，如实报告。</td></tr>
+<tr><td>C5 解释稳定</td><td>不同种子下 top-50 特征的 Jaccard ≥0.9，且比 G-NAMRFF 高至少 0.2</td><td>删除该主张，如实报告。</td></tr>
+<tr><td>T1–T3 理论</td><td>有完整证明，且数值验证无违反</td><td>删除对应定理。</td></tr></table>
+<p>相对“最强黑盒 GNN 的准确率”不设通过条件，也不作胜出主张，只如实列出差距。</p>
+<h2>预注册替代方案（只能在 S02 选型）</h2>
+<table><tr><th>编号</th><th>内容</th></tr>
+<tr><td>ALT-A</td><td>对 W 做按特征分组的 group lasso（仍为凸），换取稀疏和更少有效参数。</td></tr>
+<tr><td>ALT-B</td><td>通道增加邻居差分 z_ego−z_hop（对异配图更敏感），仍保持加性和凸性。</td></tr>
+<tr><td>ALT-C</td><td>若 ALT-A 和 ALT-B 仍不过 C2 或 C3：放弃“新模型胜出”，论文转为对 G-NAMRFF 类模型的理论与可复现性审计，附紧凑替代方案。此路线投 TMLR 或 TNNLS 类期刊是否合适须由用户判断。</td></tr></table>
+<h2>禁止事项</h2>
+<ul><li>编造或手填任何结果；看 S03 测试集后回头改模型、配置、阈值或数据集清单。</li>
+<li>事后添加显著性检验或指标来挽救结论；只报告对自己有利的数据集或种子。</li>
+<li>把 AI 自审或角色讨论写成真实同行评审或专家认可；声称已达到接收标准。</li>
+<li>提交、投稿、推送、向外发布；修改 <code>GNAM-RFF-main/</code>；删除用户文件；磁盘剩余低于 15GB 时继续下载或写入。</li>
+<li>引用未经联网核实的文献；使用未读全文的工作作对比结论。</li></ul>
+<h2>每次醒来的固定流程</h2>
+<ol><li>读 <code>PLAN.html</code> 与 <code>STATE.md</code>；核对 <code>sha256sum -c PLAN.sha256</code>。</li>
+<li>查后台任务、GPU、磁盘。</li>
+<li>推进下一步；闸门结束开一轮四角色圆桌，写入 <code>reviews/roundtable.html</code>。</li>
+<li>闸门未过：记录结论，按上表走替代方案继续。</li>
+<li>更新 STATE.md；满足停止条件则写 <code>REPORT.html</code> 并结束循环。</li></ol>
+</body></html>

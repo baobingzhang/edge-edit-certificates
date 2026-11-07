@@ -1,0 +1,5 @@
+--- code/smooth.py (as used for all smoothing results)
++++ code/smooth.py (current; docstring only, no code change)
+@@ def sample_edges
+-    """Undirected edge list after random flips. Insertions are sampled sparsely; rare duplicates with existing edges are dropped."""
++    """Undirected edge list after random flips. Insertions are sampled sparsely; rare duplicates of existing edges are kept, so such an edge counts twice in a mean."""

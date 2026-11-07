@@ -1,0 +1,22 @@
+\begin{table*}[!t]
+\centering\scriptsize
+\caption{$\pi$-PPNP~\cite{bojchevski2019} on our splits, in percent, splits 3--9, at most 1000 test nodes per split. Configuration ($\alpha$/loss) was chosen on validation data of split 0, separately for each certificate. Exact: minimum margin over all single undirected edge toggles (graphs with at most 8000 nodes). Local: the policy-iteration certificate of~\cite{bojchevski2019} with one edit per node, sound but much weaker than one global edit. Attack bound: correct nodes of the locally selected model that survived our single-edit attack, on the first 200 test nodes per split, an upper bound on its exact certified accuracy at $b=1$; on Cora the local and exact rows are different models. Degree strata of the exact certificate are shown with at least 30 nodes. Graph-free is the validation-selected graph-free reference. Hypotheses fixed before the runs.}\label{tab:ppnp}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lccccccccccc}
+\toprule
+ & Cora & CiteSeer & PubMed & Texas & Wisconsin & Cornell & Actor & Roman & Amazon & Mines. & Tolok. \\
+\midrule
+Exact: config & 0.5/CEM & 0.1/RCE & -- & 0.1/CE & 0.1/RCE & 0.1/CEM & 0.1/RCE & -- & -- & -- & -- \\
+Exact: clean & 84.8$\pm$1.7 & 72.8$\pm$1.3 & -- & 73.4$\pm$6.8 & 81.5$\pm$7.0 & 65.6$\pm$6.6 & 34.3$\pm$0.3 & -- & -- & -- & -- \\
+Exact: $b=1$ & 72.1$\pm$1.5 & 70.8$\pm$1.2 & -- & 69.9$\pm$7.8 & 80.4$\pm$6.8 & 64.5$\pm$7.0 & 31.5$\pm$1.2 & -- & -- & -- & -- \\
+Exact, degree $\le1$ & 53 & 67 & -- & 74 & 84 & 73 & 30 & -- & -- & -- & -- \\
+Exact, degree 4--7 & 82 & 76 & -- & -- & 70 & 55 & 32 & -- & -- & -- & -- \\
+Local: config & 0.1/CEM & 0.1/RCE & 0.1/RCE & 0.1/CE & 0.1/RCE & 0.1/CEM & 0.1/RCE & -- & 0.1/RCE & 0.5/CE & 0.85/RCE \\
+Local: clean & 75.8$\pm$0.7 & 73.0$\pm$1.4 & 89.0$\pm$0.3 & 73.4$\pm$6.8 & 81.5$\pm$7.0 & 65.6$\pm$6.6 & 34.3$\pm$0.3 & -- & 42.5$\pm$1.1 & 79.9$\pm$0.2 & 78.2$\pm$0.0 \\
+Local: $b=1$ & 71.7$\pm$0.9 & 70.5$\pm$1.3 & 87.8$\pm$1.0 & 69.5$\pm$8.4 & 79.8$\pm$7.0 & 64.5$\pm$7.0 & 31.3$\pm$1.2 & -- & 41.5$\pm$1.5 & 79.6$\pm$0.9 & 78.2$\pm$1.1 \\
+Attack bound, $b=1$ & 71.9$\pm$2.6 & 70.9$\pm$4.0 & 88.7$\pm$2.4 & 69.9$\pm$7.8 & 80.4$\pm$6.8 & 64.5$\pm$7.0 & 31.6$\pm$3.2 & -- & 41.8$\pm$1.1 & 81.2$\pm$1.7 & 78.7$\pm$2.4 \\
+Graph-free & 74.5 & 73.6 & 88.4 & 77.2 & 85.4 & 74.5 & 35.5 & 65.9 & 47.8 & 80.0 & 78.2 \\
+CertGAM-R $b=1$ & 73.2 & 68.1 & 86.8 & 78.8 & 82.6 & 71.0 & 32.1 & 63.0 & 34.0 & 77.7 & 76.8 \\
+\bottomrule
+\end{tabular}}
+\end{table*}

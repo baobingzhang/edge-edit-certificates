@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8"><title>计划 v5 增补</title>
+<style>body{max-width:980px;margin:2em auto;padding:0 1em;font:16px/1.75 sans-serif}td,th{border:1px solid #ccc;padding:.45em;vertical-align:top}table{border-collapse:collapse;width:100%}</style></head><body>
+<h1>计划 v5 增补（第 2 轮审稿之后，选项 A）</h1>
+<p>冻结于 2026-11-06，在计算任何两层模型证书之前写定。原因：第 2 轮审稿（<code>reviews/review_round2.md</code>）认为剩下的 FATAL 是“只覆盖单层”。用户指示“继续推进”，按 REPORT.html 中推荐的选项 A 执行。H1–H10 的判定保持不变，不重算，也不改阈值。</p>
+
+<h2>对象</h2>
+<p>两层 GraphSAGE，使用均值聚合并带根权重（PyG SAGEConv，normalize=False）：h<sub>w</sub>=ReLU(W<sub>1</sub>·mean<sub>N(w)</sub>x+b<sub>1</sub>+R<sub>1</sub>x<sub>w</sub>)，o<sub>i</sub>=W<sub>2</sub>·mean<sub>N(i)</sub>h+b<sub>2</sub>+R<sub>2</sub>h<sub>i</sub>，空邻居集的均值记为 0。</p>
+<p>切换一条边 {u,v} 只改变 h<sub>u</sub>、h<sub>v</sub>、N(u) 和 N(v)，因此只有 u 或 v 属于 N[i] 时才会影响 o<sub>i</sub>。对 u∈N[i]、v∈V\{u} 穷举全部切换，就得到 b=1 的<b>精确</b>证书。这一步不是近似，也不是攻击。</p>
+<p>GCN 的对称归一化会让影响扩展到两跳，不在本轮范围内，在文中作为局限写明。</p>
+
+<h2>闸门 G8：正确性（先于一切报告）</h2>
+<ul>
+<li>在随机小图上，把穷举器的结论与全图重算加暴力枚举全部单边切换的结果对比，“是否被翻转”必须逐节点一致。</li>
+<li>在 Texas、Cora 和一个大图上随机抽 2000 个切换，穷举器给出的 logits 与全图重算的最大绝对差须小于 1e-4。</li>
+<li>不通过就先修复，不报告任何数字。</li>
+</ul>
+
+<h2>实验 E6</h2>
+<table>
+<tr><th>项目</th><th>设定</th></tr>
+<tr><td>变体</td><td>SAGE：用 S02 选出的配置，在干净图上训练，训练流程与 S03 相同（run.fit_sgd）。<br>SAGE-aug：配置相同，但每轮在随机加噪的图上训练，噪声取 S04 中 Smooth-SAGE 选出的 (pa, pd)；最多 600 轮，以干净图验证集选择最佳轮次，耐心 200。证书针对确定性的底座模型本身，不做平滑。</td></tr>
+<tr><td>变体选择</td><td>每个数据集只用划分 0 的验证集，评分为 0.5·clean+0.5·cert<sub>1</sub>，与 S03 的认证训练规则相同。</td></tr>
+<tr><td>评估</td><td>划分 3–9，随机种子取划分编号。测试节点不超过 1000 个时全测，否则每个划分随机抽 1000 个。报告干净准确率、b=1 精确认证准确率、按度分层结果和 π*。</td></tr>
+<tr><td>数据集</td><td>全部 11 个；若某个数据集单划分超过 3 小时，记为“超时”，不替换。</td></tr>
+<tr><td>说明</td><td>划分 3–9 上 SAGE 的干净准确率此前已经看过，但两层证书从未计算。下面的 H11–H12 在计算之前冻结，按“审稿后预设分析”标注。</td></tr>
+</table>
+
+<h2>假设与阈值</h2>
+<table>
+<tr><th>编号</th><th>内容</th><th>阈值</th><th>两种结果的预设解读</th></tr>
+<tr><td>H11（主）</td><td>在非平凡数据集上（判定规则与 make_paper.py 相同：最佳不用图参照的准确率高于多数类比例 0.005 以上；当前为 9 个），选出的 SAGE 变体的 b=1 精确认证准确率低于按验证集选出的不用图参照的干净准确率</td><td>≥7/9</td><td>通过：负面结论推广到两层均值聚合模型，论文主线不变，覆盖面扩大。<br>不通过（≤6）：报告两层模型在哪些数据集上真正胜过不用图参照，主结论只限于单层模型，并把这一发现写成正面结果。</td></tr>
+<tr><td>H12</td><td>低度节点脆弱：度 ≤1 的节点 b=1 认证率低于度 4–7 的节点</td><td>在两层各至少 30 个节点的数据集中占比 ≥80%</td><td>通过：低度节点脆弱是均值聚合本身的结构性质。不通过：如实报告，删去“与模型族无关”的说法。</td></tr>
+<tr><td>H13（描述）</td><td>同一数据集上，SAGE 的精确证书与 CertGAM-R 证书对比；SAGE 的 π*</td><td>不设门槛</td><td>只作描述。</td></tr>
+</table>
+
+<h2>禁止事项与停止规则</h2>
+<ul>
+<li>不改 H1–H13 的阈值，不按测试集选变体，不删除失败结果。</li>
+<li>E6 完成后进行第 3 轮独立审稿。</li>
+<li>若 FATAL 项仍在，按 PLAN_v4 的停止规则停止并如实报告，因为第 3 轮是最后一轮。</li>
+</ul>
+</body></html>

@@ -1,0 +1,20 @@
+[
+ {
+  "seed": 0,
+  "top1_certified_b1": 0.0,
+  "eps_median": 0.3992589006431809,
+  "test_acc": 0.8378378748893738
+ },
+ {
+  "seed": 1,
+  "top1_certified_b1": 0.0,
+  "eps_median": 0.3992589006431809,
+  "test_acc": 0.8378378748893738
+ },
+ {
+  "seed": 2,
+  "top1_certified_b1": 0.0,
+  "eps_median": 0.3992589006431809,
+  "test_acc": 0.8378378748893738
+ }
+]

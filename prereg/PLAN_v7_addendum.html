@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8"><title>计划 v7 增补</title>
+<style>body{max-width:980px;margin:2em auto;padding:0 1em;font:16px/1.75 sans-serif}td,th{border:1px solid #ccc;padding:.45em;vertical-align:top}table{border-collapse:collapse;width:100%}</style></head><body>
+<h1>计划 v7 增补（第 4 轮审稿之后，用户要求继续对抗方向）</h1>
+<p>冻结于 2026-11-06，写在任何 E8、E9 结果之前。H1–H13 的判定一律不变。第 4 轮审稿的主要剩余意见是新颖性不足：现有结果都是"图模型在认证准确率上赢不了不用图的参照"这类负面结论。H12 显示脆弱性集中在低度节点。E8 针对这一机制设计一个新的聚合方式并作预注册检验。无论结果正负，都如实报告。</p>
+
+<h2>E8：度收缩聚合 ShrinkGAM（主实验，预注册）</h2>
+<table>
+<tr><th>项目</th><th>设定</th></tr>
+<tr><td>模型</td><td>logit<sub>i</sub> = b + S0<sub>i</sub> + (Σ<sub>j∈N(i)</sub> S1<sub>j</sub>) / (|N(i)| + κ)，κ ≥ 0。κ=0 即 CertGAM。κ 相当于向 0 的先验伪计数：度越低，邻居项被压得越多。对参数仍是线性的，所以认证训练仍是凸的。</td></tr>
+<tr><td>证书</td><td>对固定的删除数 p 和插入数 q，分母 |N(i)|−p+q+κ 固定，所以"删最大的 p 个、加最小的 q 个"仍然是精确最坏情形，排序证书对任意 κ 都精确。实现放在新文件 <code>code/shrink.py</code>，不改动已冻结的 <code>cert.py</code>。</td></tr>
+<tr><td>闸门 G9（正确性）</td><td>(a) 在随机小图上穷举所有不超过 b 条的关联边编辑（b≤2，κ∈{0, 0.5, 3}），证书半径与穷举结果完全一致；(b) κ=0 时，在 Cora 和 Texas 上与 <code>cert.radii</code> 逐点一致；(c) 认证训练目标中的最坏集合与穷举一致。任一不通过则停下修复，不跑 E8。</td></tr>
+<tr><td>训练与选择</td><td>每个数据集沿用 S02 为 CertGAM-R 选定的配置（K, θ, λ, B, lr, solver）。只额外选 κ ∈ {0, 0.5, 1, 2, 4, 8, 16}，依据划分 0 的验证集（最多 1000 个节点）上的 0.5·clean + 0.5·cert<sub>1</sub>，与 CertGAM-R 的选择准则相同；平分时取较小的 κ。</td></tr>
+<tr><td>评估</td><td>与 S03 相同：划分 3–9，每个划分最多 2000 个测试节点，预算 {1,2,3,5,10}，精确证书，并保留随机编辑和对抗方向的独立重算检查。另以同一流程重跑 κ=0 作为配对基线，并记录每个节点的度，用于分层。</td></tr>
+<tr><td>数据集</td><td>主表的 11 个数据集。</td></tr>
+</table>
+
+<h3>预注册假设与门槛</h3>
+<table>
+<tr><th>编号</th><th>假设</th><th>通过条件</th></tr>
+<tr><td>H14</td><td>ShrinkGAM-R 的 b=1 认证准确率高于 CertGAM-R（κ=0，同一流程重跑）</td><td>11 个数据集中至少 7 个严格更高，且单侧 Wilcoxon 符号秩检验 p&lt;0.05。</td></tr>
+<tr><td>H15</td><td>ShrinkGAM-R 的 b=1 认证准确率高于验证集选出的不用图参照的测试准确率（与 H11 用同一参照）</td><td>9 个非平凡数据集中至少 5 个严格更高。不通过时，论文写"包括度收缩在内，所考察的聚合方式都赢不了不用图的参照"，不得淡化。</td></tr>
+<tr><td>H16（机制）</td><td>增益集中在低度节点</td><td>在度 ≤1 和度 4–7 两层都至少有 30 个节点的数据集上，度 ≤1 层的 b=1 增益（ShrinkGAM-R 减 κ=0）大于度 4–7 层的增益，比例至少 70%。</td></tr>
+<tr><td>H17</td><td>干净准确率的代价</td><td>只作描述，不设门槛。</td></tr>
+</table>
+<p>多重比较：H14 的 p 值并入已有 Holm 校正族（H2、H3、H14），在文中报告校正后的结果。</p>
+
+<h3>理论（写入论文，作为命题）</h3>
+<ul>
+<li>命题 2（精确性）：任意 κ≥0，上述排序证书精确。</li>
+<li>命题 3（单边灵敏度）：若 |S1<sub>j</sub><sup>y</sup>−S1<sub>j</sub><sup>c</sup>| ≤ R，则一条边编辑使间隔改变至多 2R/(d+κ−1)（删边，d+κ&gt;1）或 2R/(d+κ+1)（加边）。κ 把低度节点的最坏灵敏度从 O(1) 降到 O(1/κ)。</li>
+<li>证明在 <code>verify_theory</code> 风格的数值检查中随机验证。</li>
+</ul>
+
+<h2>E9：补足 E7 的训练预算（探索性，不设门槛）</h2>
+<table>
+<tr><th>项目</th><th>设定</th></tr>
+<tr><td>原因</td><td>第 4 轮指出 E7 在 CiteSeer 和 Actor 上训练预算不足。</td></tr>
+<tr><td>设定</td><td>与 E7 相同，只把步数改为 1600、每步对抗节点数改为 32，检查点间隔仍为 25 步。数据集：CiteSeer、Actor、Cora。结果写入 <code>results/s08/</code>。</td></tr>
+<tr><td>预设解读</td><td>若在某数据集上超过验证集选出的不用图参照，如实报告并收窄 H11 的表述；否则把 E7 的结论从 3 个 WebKB 图扩到这些数据集，仍标为探索性。</td></tr>
+</table>
+
+<h2>停止规则</h2>
+<p>E8、E9 完成并写入论文后，做第 5 轮独立审稿（新的子 agent，只读论文和结果）。若审稿估计"大修或更好"的概率仍低于 65%，在 REPORT.html 中如实写明并结束守夜，交给用户决定。不提交、不发布、不推送。</p>
+</body></html>

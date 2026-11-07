@@ -1,0 +1,80 @@
+{
+ "Texas": {
+  "adam": {
+   "clean": 0.7966101694915254,
+   "c1": 0.711864406779661,
+   "graph_share": 0.17657479643821716
+  },
+  "cutting": {
+   "clean": 0.8305084745762712,
+   "c1": 0.8305084745762712,
+   "graph_share": 0.059798307716846466
+  },
+  "chosen": "cutting"
+ },
+ "Wisconsin": {
+  "adam": {
+   "clean": 0.8875,
+   "c1": 0.8625,
+   "graph_share": 0.19448120892047882
+  },
+  "cutting": {
+   "clean": 0.8125,
+   "c1": 0.8125,
+   "graph_share": 0.019858863204717636
+  },
+  "chosen": "adam"
+ },
+ "Cornell": {
+  "adam": {
+   "clean": 0.8813559322033898,
+   "c1": 0.7966101694915254,
+   "graph_share": 0.19699987769126892
+  },
+  "cutting": {
+   "clean": 0.864406779661017,
+   "c1": 0.8305084745762712,
+   "graph_share": 0.11645211279392242
+  },
+  "chosen": "cutting"
+ },
+ "Cora-public": {
+  "adam": {
+   "clean": 0.656,
+   "c1": 0.502,
+   "graph_share": 0.24021044373512268
+  },
+  "cutting": {
+   "clean": 0.64,
+   "c1": 0.48,
+   "graph_share": 0.23865702748298645
+  },
+  "chosen": "adam"
+ },
+ "CiteSeer-public": {
+  "adam": {
+   "clean": 0.502,
+   "c1": 0.192,
+   "graph_share": 0.44716930389404297
+  },
+  "cutting": {
+   "clean": 0.616,
+   "c1": 0.482,
+   "graph_share": 0.1748008131980896
+  },
+  "chosen": "cutting"
+ },
+ "PubMed-public": {
+  "adam": {
+   "clean": 0.708,
+   "c1": 0.684,
+   "graph_share": 0.03535226732492447
+  },
+  "cutting": {
+   "clean": 0.708,
+   "c1": 0.672,
+   "graph_share": 0.0608409121632576
+  },
+  "chosen": "adam"
+ }
+}

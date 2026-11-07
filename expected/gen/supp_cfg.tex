@@ -1,0 +1,27 @@
+\begin{table*}[!t]
+\centering\scriptsize
+\caption{Configurations selected on the validation set of split 0 and used on splits 3--9, read from the result files. lr: learning rate; wd: weight decay; h: hidden units; p: dropout; $K,\theta,\lambda$: number of eigenfunctions, RBF bandwidth and penalty of the shape functions; $B$: training budget of certified training; ``cut'': cutting-plane solver; $R,M$: filter order, kernel bandwidth and number of random features of G-NAMRFF; $p_+/p_-$: edge insertion/deletion probabilities of smoothing. ``--'': not run or failed (H2GCN exceeded the time limit on tolokers; $\pi$-PPNP ran out of memory on roman-empire; the exact $\pi$-PPNP certificate and SAGE-adv were run only on the graphs listed in the main text).}\label{tab:cfg}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lccccccccccc}
+\toprule
+ & Cora & CiteSeer & PubMed & Texas & Wisconsin & Cornell & Actor & Roman & Amazon & Mines. & Tolok. \\
+\midrule
+LogReg (lr/wd) & 0.1/1e-5 & 0.1/1e-5 & 0.1/1e-5 & 0.1/5e-4 & 0.1/1e-3 & 0.1/5e-4 & 0.01/1e-5 & 0.1/1e-5 & 0.01/1e-5 & 0.1/1e-3 & 0.1/5e-4 \\
+MLP (lr/wd/h/p) & 0.01/1e-5/256/0.5 & 0.01/1e-5/64/0.5 & 0.01/1e-5/64/0.2 & 0.01/5e-4/64/0.5 & 0.01/5e-4/256/0.5 & 0.01/1e-5/64/0.5 & 0.01/5e-4/64/0.5 & 0.01/5e-4/64/0.2 & 0.01/1e-5/256/0.2 & 0.001/5e-4/64/0.5 & 0.01/5e-4/64/0.2 \\
+Ego-GAM ($K/\theta/\lambda$) & 4/4/1e-1 & 2/2/1e-1 & 4/4/1e-2 & 2/1/1e-2 & 1/1/1e-1 & 4/1/1e-1 & 2/1/1e-1 & 4/1/1e-2 & 4/2/1e-2 & 1/1/1e-3 & 4/1/1e-4 \\
+GCN (lr/wd/h/p) & 0.01/5e-4/64/0.5 & 0.01/5e-4/256/0.5 & 0.01/1e-5/64/0.2 & 0.01/5e-4/256/0.2 & 0.01/5e-4/256/0.5 & 0.01/5e-4/256/0.5 & 0.01/5e-4/256/0.5 & 0.01/5e-4/256/0.2 & 0.01/1e-5/256/0.2 & 0.001/1e-5/256/0.2 & 0.01/1e-5/256/0.2 \\
+SAGE (lr/wd/h/p) & 0.01/5e-4/256/0.2 & 0.01/5e-4/64/0.5 & 0.01/1e-5/256/0.2 & 0.01/5e-4/256/0.2 & 0.01/5e-4/64/0.2 & 0.01/5e-4/256/0.2 & 0.01/5e-4/64/0.2 & 0.01/1e-5/256/0.5 & 0.01/1e-5/256/0.2 & 0.01/1e-5/256/0.2 & 0.01/1e-5/256/0.2 \\
+GAT (lr/wd/h/p) & 0.01/5e-4/64/0.5 & 0.01/5e-4/256/0.5 & 0.01/1e-5/256/0.2 & 0.01/5e-4/256/0.2 & 0.01/1e-5/64/0.5 & 0.01/1e-5/64/0.5 & 0.01/5e-4/256/0.5 & 0.01/1e-5/64/0.2 & 0.01/1e-5/256/0.2 & 0.01/5e-4/64/0.2 & 0.01/1e-5/256/0.2 \\
+H2GCN (lr/wd/h/p) & 0.01/5e-4/64/0.5 & 0.01/5e-4/256/0.5 & 0.01/1e-5/64/0.5 & 0.01/5e-4/256/0.5 & 0.01/5e-4/64/0.5 & 0.01/5e-4/64/0.5 & 0.01/5e-4/256/0.2 & 0.01/5e-4/256/0.5 & 0.01/1e-5/256/0.5 & 0.01/1e-5/64/0.2 & -- \\
+G-NAMRFF (lr/wd/$R/\theta/M$) & 0.1/5e-4/5/2.5/100 & 0.1/5e-4/5/2.5/100 & 0.1/5e-4/3/1/40 & 0.1/5e-4/5/2.5/100 & 0.1/5e-4/3/1/100 & 0.1/5e-4/3/1/100 & 0.02/5e-4/5/2.5/100 & 0.03/5e-4/5/2.3/40 & 0.1/5e-4/3/1/40 & 0.03/5e-4/5/2.3/40 & 0.1/5e-4/3/1/40 \\
+CertGAM ($K/\theta/\lambda$) & 4/1/1e-1 & 4/4/1e-1 & 4/4/1e-2 & 2/1/1e-4 & 1/1/1e-4 & 2/1/1e-2 & 2/2/1e-2 & 4/1/1e-2 & 4/1/1e-3 & 1/1/1e-4 & 4/1/1e-4 \\
+CertGAM-R ($K/\theta/\lambda/B$/lr) & 4/1/1e-1/1/0.005 & 4/4/1e-1/2/0.005 & 4/4/1e-2/2/0.005 & 2/1/1e-4/2/cut & 1/1/1e-4/2/0.005 & 2/1/1e-2/1/cut & 2/2/1e-2/2/0.005 & 4/1/1e-2/1/0.005 & 4/1/1e-3/2/0.02 & 1/1/1e-4/2/0.005 & 4/1/1e-4/1/0.005 \\
+Smooth-GCN ($p_+/p_-$) & 7e-4/0.8 & 4e-4/0.8 & 1e-4/0.8 & 3e-2/0.8 & 7e-3/0.8 & 3e-2/0.8 & 2e-3/0.8 & 6e-5/0.8 & 6e-4/0.8 & 4e-4/0.6 & 4e-3/0.6 \\
+Smooth-SAGE ($p_+/p_-$) & 4e-4/0.8 & 8e-4/0.95 & 5e-4/0.8 & 2e-2/0.95 & 3e-2/0.8 & 2e-2/0.8 & 9e-4/0.95 & 3e-5/0.95 & 3e-4/0.95 & 8e-4/0.8 & 2e-2/0.8 \\
+SAGE 2-layer (variant) & aug & aug & aug & plain & aug & aug & aug & aug & aug & aug & plain \\
+ShrinkGAM-R ($\kappa$) & 0.5 & 16 & 16 & 0 & 0 & 0 & 16 & 1 & 16 & 0.5 & 2 \\
+$\pi$-PPNP exact ($\alpha$/loss) & 0.5/CEM & 0.1/RCE & -- & 0.1/CE & 0.1/RCE & 0.1/CEM & 0.1/RCE & -- & -- & -- & -- \\
+$\pi$-PPNP local ($\alpha$/loss) & 0.1/CEM & 0.1/RCE & 0.1/RCE & 0.1/CE & 0.1/RCE & 0.1/CEM & 0.1/RCE & -- & 0.1/RCE & 0.5/CE & 0.85/RCE \\
+\bottomrule
+\end{tabular}}
+\end{table*}

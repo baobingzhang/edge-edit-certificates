@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8"><title>G-NAMRFF 创新方案与执行计划 v2</title>
+<style>
+body{max-width:1040px;margin:2em auto;padding:0 1.2em;font:16px/1.75 "Noto Sans CJK SC",sans-serif;color:#1c2024}
+h1{font-size:1.7em}h2{margin-top:2em;border-bottom:2px solid #d5d9de;padding-bottom:.2em}h3{margin-top:1.4em}
+table{border-collapse:collapse;width:100%;font-size:.92em;margin:.8em 0}th,td{border:1px solid #cfd4d9;padding:.45em .55em;vertical-align:top;text-align:left}th{background:#f1f3f5}
+code{background:#f1f3f5;padding:.05em .3em;border-radius:3px;font-size:.92em}.note{background:#fff8e6;border-left:4px solid #e0a800;padding:.6em .9em}.win{background:#eaf6ec}
+</style></head><body>
+<h1>G-NAMRFF 创新方案与执行计划 v2</h1>
+<p>冻结于 2026-11-04，哈希记录在 <code>PLAN_v2.sha256</code>。v1 保留在 <code>PLAN.html</code>。修改原因：用户要求先生成多个方案、筛选后再给胜出方案写详细计划；v1 的主张 C1 已被实测推翻。</p>
+<p class="note">冻结前已看到的结果（最终报告须披露）：Cora、CiteSeer 的部分预实验；Cora 形状函数审计；作者脚本 Cora 的 2 个种子；淘汰实验已完成的 Cora、Texas、Wisconsin、Actor、roman-empire 及 amazon-ratings 的部分结果。这些都使用划分 0–2，只作探索。这是本地冻结，不是第三方预注册。</p>
+
+<h2>1. 已确认的事实</h2>
+<table><tr><th>事实</th><th>证据</th><th>对方案的影响</th></tr>
+<tr><td>原文 Lemma A.1 常数不成立：R=1 时界为 0，实际约为 ε；R=2–7 在路径图上超界 22–98 倍</td><td><code>results/audit_base.json</code></td><td>需要正确且紧的稳定界（T1）</td></tr>
+<tr><td>参数公式未计类别数和偏置：Cora 公式 14.3 万，代码 101.3 万；16 维 GCN 2.3 万</td><td>同上；代码核对</td><td>“轻量”只对 GNAN 成立</td></tr>
+<tr><td>“G-NAMRFF 近线性”<b>不成立</b>：θ≥1 时非线性方差比 0.93–0.99</td><td><code>results/audit_linear_Cora.json</code></td><td>删除 v1 主张 C1；不能写“退化”</td></tr>
+<tr><td>作者脚本 Cora 训练极不平稳，验证准确率常在 600 轮后才回升；已跑种子 71.9%、76.1%，论文 79.84%</td><td><code>logs/authors/</code>（Table 3 的 5 种子仍在跑）</td><td>尚不能断言复现失败；基线不用早停</td></tr>
+<tr><td>AMIGA（2026-10）已用 motif 做图加性模型，声称中心化后分解唯一，并以 G-NAMRFF 为基线，未涉及凸训练、不确定性和解释证书（据全文摘要）</td><td>arXiv 2610.20662，须亲读核实</td><td>不能以“唯一分解”作为创新点</td></tr>
+<tr><td>SlimG、ASGC 已占“线性、快速、可解释图模型”位置</td><td>文献检索</td><td>方案 A 单独成文不成立</td></tr>
+</table>
+
+<h2>2. 候选方案</h2>
+<table><tr><th>方案</th><th>核心想法</th><th>主要风险</th><th>证据状态</th></tr>
+<tr><td>A 凸 HopGAM</td><td>恰好 h 跳通道、确定性 Mercer 基、凸训练</td><td>与 SlimG、ASGC、SIGN、H2GCN 思路接近</td><td>Cora 78.3%，CiteSeer 67.8%（公开划分，探索）</td></tr>
+<tr><td>B 贝叶斯图 GAM</td><td>把 GP 表述落实为后验，给形状函数可信区间并做校准</td><td>Laplace 单峰近似；高维下计算量大；LA-NAM 已覆盖表格情形</td><td>只有文献，未做实验</td></tr>
+<tr><td>C CP 张量 GAM</td><td>特征×跳数×基×类别低秩，用 Kruskal 条件讨论可辨识性</td><td>压缩损失精度；非凸</td><td><b>淘汰实验未过</b>：Cora 降约 24–33 点，Texas 降约 8–15，roman-empire 降约 3–4</td></tr>
+<tr class="win"><td>D 可认证解释（胜出）</td><td>邻居形状函数取均值的加性模型，局部连边编辑下预测和归因都有精确证书，认证训练仍为凸</td><td>半径偏小；低度节点弱；威胁模型须讲清</td><td>穷举一致 3000/3000；5 个数据集中 4 个过淘汰线</td></tr>
+<tr><td>E 低秩特征交互</td><td>原文未来方向，低秩 GA²M</td><td>AMIGA、NODE-GA²M 接近；交互项解释性下降</td><td>只有文献</td></tr>
+<tr><td>F 基线审计</td><td>更正原文引理，核对代码和复现性</td><td>单独成文的贡献不足</td><td>证据较强，并入 D 作为动机和附带贡献</td></tr>
+<tr><td>G 谱滤波异配扩展</td><td>Chebyshev、Bernstein 等可学习滤波</td><td>赛道拥挤，只能拼准确率</td><td>未做实验，直接淘汰</td></tr>
+</table>
+
+<h2>3. 初筛</h2>
+<p>评分是我的判断，1–5 分，不是客观度量。可靠性优先看已有实验证据。</p>
+<table><tr><th>方案</th><th>创新性</th><th>可靠性</th><th>撞车安全</th><th>本机算力</th><th>期刊匹配</th><th>合计</th><th>结论</th></tr>
+<tr><td>A</td><td>1</td><td>4</td><td>1</td><td>5</td><td>2</td><td>13</td><td>并入 D 作消融</td></tr>
+<tr><td>B</td><td>3</td><td>2</td><td>4</td><td>3</td><td>3</td><td>15</td><td>后备</td></tr>
+<tr><td>C</td><td>4</td><td>1</td><td>4</td><td>5</td><td>4</td><td>18</td><td>淘汰，实验未过</td></tr>
+<tr class="win"><td>D</td><td>4</td><td>4</td><td>4</td><td>5</td><td>4</td><td>21</td><td>选定</td></tr>
+<tr><td>E</td><td>2</td><td>2</td><td>2</td><td>4</td><td>3</td><td>13</td><td>淘汰</td></tr>
+<tr><td>F</td><td>2</td><td>5</td><td>4</td><td>5</td><td>1</td><td>17</td><td>并入 D</td></tr>
+<tr><td>G</td><td>1</td><td>3</td><td>1</td><td>4</td><td>2</td><td>11</td><td>淘汰</td></tr>
+</table>
+<p><b>D 的撞车检查仍是初步结论。</b>检索到的最近邻：Bojchevski 的 PPR 精确证书（传播模型不同）、XGNNCert（事后解释器，靠集成）、随机平滑（概率证书，不解释）。未发现相同组合，但检索不等于穷尽，定稿前须复查（闸门 G5）。</p>
+
+<h2>4. 选定方案：CertGAM</h2>
+<h3>4.1 模型</h3>
+<p>节点 i 的类别 c 得分：<code>logit_ic = b_c + Σ_k f⁰_kc(x_ik) + (1/|N(i)|) Σ_{j∈N(i)} Σ_k f¹_kc(x_jk)</code>，孤立节点的均值项取 0。形状函数是确定性 Mercer 基的线性组合，故模型对参数线性，岭正则下严格凸。这个结构属于 GNAN 家族（按距离加权的形状函数和），须明确致谢；区别在于取 1 跳、无学习的距离函数、凸训练和证书。</p>
+<h3>4.2 威胁模型</h3>
+<ul>
+<li>攻击者增删图中任意边，目标节点 i 的预算为 b。因 logit_i 只依赖 N(i)，不与 i 相连的编辑影响为零，所以全图 b 次编辑是其特例。</li>
+<li>只覆盖逃逸攻击（测试时）的单节点目标。不覆盖特征篡改、节点注入和投毒。这些限制写入论文。</li>
+<li>归一化参数和训练权重在攻击时固定。</li>
+</ul>
+<h3>4.3 待证结果</h3>
+<table><tr><th>编号</th><th>内容</th><th>数值验证</th></tr>
+<tr><td>Thm 1 精确证书</td><td>固定删 p 增 q 时，最坏均值由“删最大分、增最小分”取到；枚举 p+q≤b 即得精确最优。代价 O(b²) 加排序。</td><td><code>test_cert.py</code> 穷举对照；已过 3000 例</td></tr>
+<tr><td>Thm 2 归因证书</td><td>特征 k 的贡献及任意两特征贡献差，都是邻居均值形式，故区间和两两排序同样精确。top-1 稳定性精确，top-k 为可靠但不必紧的判定。</td><td>新写穷举测试</td></tr>
+<tr><td>Thm 3 凸认证训练</td><td>最坏边距是 W 的线性函数取最小，因而凹；log(1+Σexp(−m_c)) 对其凸单调，鲁棒目标凸，且为鲁棒 0-1 损失的上界。</td><td>随机线段上检验凸性不等式；多起点收敛到相同目标值</td></tr>
+<tr><td>Thm 4 更正稳定界</td><td>‖H(L̂)−H(L)‖≤Σ|α_h|((2+ε)^h−2^h)，α≥0 且 L 有特征值 2、扰动沿其特征向量时取等；并给出原 Lemma A.1 的反例。</td><td><code>verify_theory.py</code> 已通过</td></tr>
+</table>
+<h3>4.4 基线与对比（预算相同：每模型最多 20 组配置）</h3>
+<ul>
+<li><b>无证书准确率：</b>逻辑回归、MLP、GCN、GraphSAGE、GAT、H2GCN（若实现通过自测）、G-NAMRFF、GNAN（算力允许）。</li>
+<li><b>认证对比：</b>GCN 和 G-NAMRFF 上自实现的稀疏随机平滑（Bojchevski 2020 思路，Clopper-Pearson 下界，α=0.01），用其全图编辑半径和我们同口径比较。实现须先在合成二分类上复现已知半径公式。</li>
+<li><b>经验鲁棒性：</b>对 GCN 做局部贪心梯度攻击，只作“经验上界”对照，明确它不是证书。</li>
+<li><b>解释证书对比：</b>G-NAMRFF 用 Thm 4 加 Lipschitz 得到的可靠区间。XGNNCert 面向图级事后解释，不做数值对比，只在相关工作中讨论。</li>
+</ul>
+<h3>4.5 数据</h3>
+<p>节点分类：Cora、CiteSeer、PubMed、Texas、Wisconsin、Cornell、Actor、roman-empire、amazon-ratings、minesweeper、tolokers。下载或显存失败如实记录，不替换。Planetoid 同时报告公开划分和 10 个随机 60/20/20 划分。合成数据：已知特征和邻居贡献的图，用于验证归因恢复。图分类不进主线，证书定义不同；如时间充裕只作扩展讨论。</p>
+
+<h2>5. 冻结假设和阈值（S03 判定）</h2>
+<table><tr><th>编号</th><th>假设</th><th>通过条件</th><th>未通过时</th></tr>
+<tr><td>H1 证书正确（硬闸门）</td><td>证书永不被真实编辑击破</td><td>穷举测试 0 差异；所有 S03 被认证节点的攻击 0 击破</td><td>停止并排查；排查不清则终止方案 D</td></tr>
+<tr><td>H2 认证优势</td><td>同预算下认证准确率高于平滑 GCN</td><td>b=1 时 11 个数据集至少 7 个均值更高，配对 Wilcoxon p&lt;0.05</td><td>不声称优势；走 ALT-2 或如实报告</td></tr>
+<tr><td>H3 准确率代价可接受</td><td>相对 GCN 的中位差距小；异配图优于 G-NAMRFF</td><td>中位差距 ≤5 个百分点；8 个异配集至少 6 个高于 G-NAMRFF，配对 Wilcoxon p&lt;0.05</td><td>如实报告代价，删除对应主张</td></tr>
+<tr><td>H4 认证训练有效</td><td>相对普通训练提升认证率</td><td>至少 6 个数据集 b=1 认证准确率提升 ≥3 点且无攻击准确率下降 ≤3 点</td><td>论文保留凸性结论，不声称训练收益</td></tr>
+<tr><td>H5 解释可认证</td><td>多数节点解释在小预算下稳定</td><td>至少一半数据集上 b=1 时 top-1 特征可认证稳定率 ≥50%，且高于 G-NAMRFF 的可靠下界</td><td>如实报告数值，删除“解释稳定”主张</td></tr>
+<tr><td>H6 证书高效</td><td>确定性证书比平滑快</td><td>单节点耗时中位数至少快 100 倍（同硬件）</td><td>如实报告</td></tr>
+<tr><td>H7 归因恢复</td><td>合成数据恢复真实贡献</td><td>top-k 特征恢复率比 G-NAMRFF 至少高 0.10</td><td>删除该主张</td></tr>
+</table>
+<p>相对最强黑盒 GNN 的无攻击准确率不设胜出目标，只报告差距。多重比较：表中只把上述预设检验算作确认性结论，其余标为探索性。</p>
+
+<h2>6. 阶段与替代方案</h2>
+<table><tr><th>阶段</th><th>数据范围</th><th>允许做什么</th></tr>
+<tr><td>S01 探索</td><td>划分 0–2</td><td>调试和建立假设，结果不进主表。</td></tr>
+<tr><td>S02 选型</td><td>划分 0–2，只看验证集</td><td>定配置，决定是否启用替代方案。</td></tr>
+<tr><td>S03 确认</td><td>划分 3–9；Planetoid 的新种子和随机划分</td><td>配置冻结后一次跑完，主表只来自这里。之后不再改模型、配置或数据集。</td></tr></table>
+<table><tr><th>替代</th><th>内容</th><th>启用条件（只在 S02 判断）</th></tr>
+<tr><td>ALT-1 求解器</td><td>认证训练改用“加入活跃集的切割平面 + L-BFGS”，再不行用平滑最坏边距</td><td>Adam 版验证集上不如普通训练或多起点目标不一致</td></tr>
+<tr><td>ALT-2 鲁棒聚合</td><td>均值换截尾均值或中位数，证书同样可由顺序统计量精确算出；代价是失去 W 上的凸性</td><td>验证集 b=1 认证准确率不足无攻击准确率的 40% 的数据集超过一半</td></tr>
+<tr><td>ALT-3 两跳</td><td>加入 2 跳通道，用可靠但非精确的界</td><td>2 跳在验证集上平均提高无攻击准确率 ≥3 点</td></tr>
+<tr><td>ALT-4 收缩主张</td><td>不声称优于平滑或 G-NAMRFF，论文定位为“精确证书的一类模型及其代价”，并附基线审计</td><td>H2 和 H3 都未通过时。是否投稿由用户决定</td></tr>
+</table>
+
+<h2>7. 工作分解和闸门</h2>
+<table><tr><th>闸门</th><th>工作</th><th>产物</th><th>通过标准</th></tr>
+<tr><td>G1 基线</td><td>Table 3 五种子；修复早停后的 G-NAMRFF；写逻辑回归、H2GCN；梳理原文与代码差异</td><td><code>results/repro/</code>、差异表</td><td>每项差异都有记录；我的实现与作者模型等价测试通过</td></tr>
+<tr><td>G2 核心代码</td><td>向量化证书（任意 b，大度节点批处理）；归因证书；Adam 和切割平面两种认证训练；随机平滑；局部攻击</td><td><code>code/</code>、测试</td><td>穷举、凸性、平滑公式、攻击不破证书全部通过</td></tr>
+<tr><td>G3 选型</td><td>S02 配置搜索；判断 ALT-1 到 ALT-3</td><td><code>results/s02/</code>、配置冻结文件及哈希</td><td>只用验证集；圆桌通过</td></tr>
+<tr><td>G4 确认实验</td><td>S03 全量；消融（K、θ、λ、ego 通道、基函数类型）；敏感性；耗时；合成数据</td><td><code>results/s03/</code></td><td>全部任务有结果或明确失败记录；H1–H7 自动判定</td></tr>
+<tr><td>G5 理论和文献</td><td>Thm 1–4 完整证明；引用逐条联网核实；撞车复查；亲读 AMIGA、XGNNCert、Bojchevski 等全文</td><td><code>paper/proofs.tex</code>、<code>paper/refs.bib</code>、核实表</td><td>独立子 agent 审证明无未解决问题；所有引用已核实</td></tr>
+<tr><td>G6 稿件</td><td>IEEEtran 全文；图表全部由脚本生成；代码和数据可用性说明；AI 使用披露；作者信息留空</td><td><code>paper/main.pdf</code></td><td>编译无错；稿件数字与 <code>results/</code> 自动比对一致</td></tr>
+<tr><td>G7 对抗审查</td><td>四角色圆桌至少 3 轮；独立子 agent 模拟审稿至少 2 轮，每轮逐条处理</td><td><code>reviews/</code>、回应表</td><td>无未解决致命问题；一键复现脚本在干净环境跑通</td></tr>
+</table>
+
+<h3>交付清单</h3>
+<table><tr><th>类别</th><th>内容</th></tr>
+<tr><td>图</td><td>模型结构；认证准确率随预算变化；无攻击与认证的权衡；带证书区间的形状函数；证书耗时随规模变化；解释稳定率；原 Lemma 反例；合成数据归因恢复</td></tr>
+<tr><td>表</td><td>数据集统计；无攻击准确率；认证准确率（b=1,2,3,5）；认证训练对比；解释证书；消融；耗时；原文与代码差异；假设判定</td></tr>
+<tr><td>论文结构</td><td>引言；相关工作；预备与基线审计；模型；证书与定理；认证训练；实验；局限；结论；附录证明</td></tr>
+<tr><td>数据和代码</td><td><code>results/</code> 全量原始结果；<code>run_all.sh</code>；环境文件；测试；README</td></tr>
+<tr><td>过程</td><td><code>REPORT.html</code> 总报告；<code>reviews/roundtable.html</code>；审稿记录；失败和被推翻假设的记录</td></tr>
+</table>
+<p><b>目标期刊（待用户定）：</b>首选 IEEE TNNLS，备选 TKDE、TPAMI、TIFS。会议方向 ICML 2027、KDD 2027 的截稿未核实官方日期，须用户确认后再对齐格式。</p>
+
+<h2>8. 四角色流程</h2>
+<p>每个闸门结束开一轮，记入 <code>reviews/roundtable.html</code>。每条质询落成动作或明确驳回。这是同一 AI 的自我质询，不代表任何真实专家。</p>
+<table><tr><th>角色</th><th>必答问题</th></tr>
+<tr><td>机器学习专家</td><td>这是新思想还是已有方法换皮？去掉哪部分贡献就塌了？本结果能否被更简单的模型解释？</td></tr>
+<tr><td>顶刊审稿人</td><td>基线公平吗？统计站得住吗？威胁模型是否夸大？下一条拒稿理由是什么？</td></tr>
+<tr><td>物理学家</td><td>量纲和尺度是否一致？极限情形（度→0、度→∞、b→度）行为对吗？有无可检验的简单图像？</td></tr>
+<tr><td>数学家</td><td>定理假设是否完整？能否举反例？界是否紧？“精确”是否严格成立，边界情形如孤立节点是否处理？</td></tr>
+</table>
+
+<h2>9. 禁止事项</h2>
+<ul>
+<li>编造或手填结果；看 S03 测试集后回头改模型、配置、阈值或数据集清单。</li>
+<li>事后增加检验或指标挽救结论；只报告有利的数据集或种子。</li>
+<li>把 AI 自审、角色讨论或子 agent 审查写成真实同行评审或专家认可；声称已达到接收标准。</li>
+<li>提交、投稿、推送、向外发布；修改 <code>GNAM-RFF-main/</code>；删除用户文件；磁盘剩余低于 15GB 时继续下载或写入。</li>
+<li>引用未核实文献；未读全文的工作不作对比结论。</li>
+<li>给原文作者下“错误”以外的定性判断；对原文的批评只陈述可复现的数学和实验事实。</li>
+</ul>
+
+<h2>10. 每次醒来的流程和停止条件</h2>
+<ol><li>读本文件和 <code>STATE.md</code>，核对哈希。</li><li>查后台任务、GPU、磁盘；GPU 同时最多两个重任务。</li><li>推进当前闸门的下一项；闸门结束开圆桌。</li><li>未过则记录结论，按第 5、6 节处理。</li><li>更新 <code>STATE.md</code>。</li></ol>
+<p><b>停止：</b>G1–G7 全过；或 H1 失败且查不清；或同一闸门连续 3 轮无实质进展。停止时写 <code>REPORT.html</code>。停止不代表已达到接收标准，真实结论只能来自投稿。</p>
+</body></html>

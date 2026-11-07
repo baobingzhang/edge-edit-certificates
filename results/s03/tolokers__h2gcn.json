@@ -1,0 +1,8 @@
+{
+ "ds": "tolokers",
+ "model": "h2gcn",
+ "stage": "s03",
+ "status": "error",
+ "trace": "Traceback (most recent call last):\n  File \"<repo>/code/exp.py\", line 189, in main\n    cfgs = [json.load(open(os.path.join(gam.ROOT, \"results\", \"s02\", f\"{ds}__{name}.json\")))[\"cfg\"]]\n            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^\nKeyError: 'cfg'\n",
+ "sec": 0.2810640335083008
+}

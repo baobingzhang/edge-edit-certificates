@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><title>计划 v4 增补</title>
+<style>body{max-width:980px;margin:2em auto;padding:0 1em;font:16px/1.75 sans-serif}td,th{border:1px solid #ccc;padding:.45em;vertical-align:top}table{border-collapse:collapse;width:100%}</style></head><body>
+<h1>计划 v4 增补（审稿第 1 轮之后）</h1>
+<p>冻结于 2026-11-05。原因：独立 AI 审稿（<code>reviews/review_round1.md</code>）给出拒稿判断。H1–H10 的 S03 判定保持原样，不重算、不改阈值。本轮实验全部使用已看过的划分，因此一律标为“审稿后补充分析”，不算确认性结论。</p>
+<h2>论文定位调整</h2>
+<ul><li>主结论改为负面优先：单比认证准确率，不用图模型几乎总是最好；认证训练的收益很大程度来自减少用图。</li>
+<li>精确证书推广到一般单层均值聚合模型 f(x_i)+mean g(x_j)，加性结构只对归因证书必要。</li>
+<li>H8 如实写为“按规则通过但不稳健”，附区间和参照敏感性。摘要不作为正面结论。</li></ul>
+<h2>补充实验（S04）</h2>
+<table><tr><th>编号</th><th>内容</th><th>预设解读</th></tr>
+<tr><td>E1 CertMLP</td><td>f、g 为 MLP 的单层均值模型，普通与认证训练；每模型 16 组配置，只用划分 0 验证集选择</td><td>回答加性结构的代价。在 b=1 认证准确率和干净准确率上是否优于 CertGAM 只作描述，不做胜负检验。</td></tr>
+<tr><td>E2 平滑加强</td><td>SAGE 底座，放宽网格（pd 到 0.95，pa 四档），选型 N=500、认证 N=20000，表中标注样本数造成的上限</td><td>若 CertGAM-R 对平滑的优势消失，则撤回 H2 的说法，只写 S03 结果和这一反转。</td></tr>
+<tr><td>E3 G-NAMRFF 已发表配置</td><td>Cora、CiteSeer、PubMed、Cornell 加入论文 Table 3 配置，验证集更高者才跑确认划分</td><td>若 H3 的胜负方向因此改变，写明。</td></tr>
+<tr><td>E4 作者脚本 lr 差异</td><td>Cora 用代码注释中的 lr=0.018 再跑 5 种子</td><td>和 lr=0.18 一起报告。</td></tr>
+<tr><td>E5 分析</td><td>π* 的划分级 bootstrap 区间；对三种不用图参照的敏感性；同类参照（CertGAM 对 Ego-GAM）；按度分层认证率；形状函数和单节点证书案例</td><td>不新增结论门槛，只呈现。</td></tr></table>
+<h2>停止规则</h2>
+<p>第 2 轮审稿后再判断。若 FATAL 项在 3 轮内不能消除，按计划停止并如实报告“当前结果不足以支撑 IEEE Transactions 投稿”，由用户决定改投短文、研讨会或放弃。</p>
+</body></html>

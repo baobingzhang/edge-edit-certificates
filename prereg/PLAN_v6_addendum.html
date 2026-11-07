@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8"><title>计划 v6 增补</title>
+<style>body{max-width:980px;margin:2em auto;padding:0 1em;font:16px/1.75 sans-serif}td,th{border:1px solid #ccc;padding:.45em;vertical-align:top}table{border-collapse:collapse;width:100%}</style></head><body>
+<h1>计划 v6 增补（第 3 轮审稿之后）</h1>
+<p>冻结于 2026-11-06，写于任何 E7 结果之前。第 3 轮审稿（<code>reviews/review_round3.md</code>）认为已无 FATAL 项，但提出 M1：两层 SAGE 没有做鲁棒训练，所以 H11 几乎必然通过。H1–H13 的判定一律不变。</p>
+
+<h2>实验 E7（探索性，不设通过门槛）</h2>
+<table>
+<tr><th>项目</th><th>设定</th></tr>
+<tr><td>模型</td><td>SAGE-adv：两层 SAGE，配置取 S02 的 SAGE。</td></tr>
+<tr><td>训练损失</td><td>0.5·（全部训练节点上的干净交叉熵）+ 0.5·（每步随机 16 个训练节点上的最坏单边编辑交叉熵）。</td></tr>
+<tr><td>最坏编辑的计算</td><td>用 cert2.toggled_logits 精确计算，对全部 v 取最大损失。若 |N[i]|&gt;32，训练时只随机取 32 个 u，评估时仍然穷举。</td></tr>
+<tr><td>训练过程</td><td>Adam，共 400 步，每 25 步在划分 0 的验证集（最多 300 个节点）上计算 0.5·clean+0.5·cert<sub>1</sub>，保留得分最高的检查点。确认划分上训练时，检查点仍按该划分自己的验证集选择。</td></tr>
+<tr><td>数据集</td><td>节点数不超过 8000 的非平凡数据集：Texas、Wisconsin、Cornell、Cora、CiteSeer、Actor。更大的图因显存限制不做，在文中写明。</td></tr>
+<tr><td>评估</td><td>与 E6 相同：划分 3–9，用命题 1 的精确证书计算 b=1 认证准确率。</td></tr>
+</table>
+
+<h2>预设解读</h2>
+<ul>
+<li>若 SAGE-adv 在某些数据集上超过验证集选出的不用图参照：如实报告这些数据集，并把 H11 的结论改写为“在未做鲁棒训练的两层模型上成立”。</li>
+<li>若都没有超过：可以写“包括精确对抗训练在内”，但限定为这 6 个数据集，并标注为探索性结果。</li>
+</ul>
+
+<h2>文字修订（M2 及其他）</h2>
+<ul>
+<li>披露 Smooth-SAGE 相对不用图参照的比较结果，由脚本计算。</li>
+<li>其余按第 3 轮审稿逐项修改。作者信息仍由用户填写，不提交、不发布。</li>
+</ul>
+</body></html>

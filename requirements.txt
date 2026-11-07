@@ -1,0 +1,7 @@
+# Versions used for the paper (Python 3.12.2, CUDA build of PyTorch). Other recent versions are likely to work
+# for level 1 and 2; level 3 reruns are only comparable within GPU non-determinism (see README).
+torch==2.15.0
+torch_geometric==2.8.1
+numpy==2.5.4
+scipy==1.18.1
+matplotlib==3.11.2

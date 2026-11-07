@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8"><title>计划 v8b 增补</title>
+<style>body{max-width:980px;margin:2em auto;padding:0 1em;font:16px/1.75 sans-serif}td,th{border:1px solid #ccc;padding:.45em;vertical-align:top}table{border-collapse:collapse;width:100%}</style></head><body>
+<h1>计划 v8b 增补（E10 正式运行之前）</h1>
+<p>冻结于 2026-11-07，在任何 E10 正式结果（划分 0 的选择、划分 3–9 的评估）产生之前写定。PLAN_v8 的内容和阈值一律不改，照原样执行和报告。</p>
+
+<h2>原因（如实记录）</h2>
+<p>G10 通过后，我在<b>划分 1 的验证集</b>上做了一次冒烟测试。划分 1 不参与选择，也不参与评估。测试用了两个模型：α=0.85 的 CE 与 CEM，数据集为 Texas 和 Cora。结果如下：</p>
+<ul>
+<li>PLAN_v8 的局部预算证书（每个节点至多翻转 b 条出边）对 CE 模型给出的 b=1 认证准确率在两个数据集上都是 0。原因是这个威胁模型允许所有节点同时各翻转一条边，合计多达 n 次编辑，远强于我们的“全局 1 次编辑”。所以 H18 在此证书下几乎必然通过，但不提供信息。</li>
+<li>官方 CEM 在 Cora 上塌缩成常数预测（验证准确率 0.32）。</li>
+<li>真实的单边攻击把 CE 模型在 Cora 上的鲁棒准确率压到 0.43（干净准确率 0.88）。</li>
+</ul>
+
+<h2>新增：π-PPNP 的精确单边证书（E10e）</h2>
+<table>
+<tr><th>项目</th><th>设定</th></tr>
+<tr><td>原理</td><td>记 M = (I − αP)<sup>−1</sup>，P = D̂<sup>−1</sup>(A+I)。目标节点 t、类别对 (y,c) 的间隔为 (1−α)·x<sub>t</sub>·r，其中 x<sub>t</sub> 是 M 的第 t 行，r = H<sub>y</sub> − H<sub>c</sub>。一次无向切换 {u,v} 只改变 P 的第 u、v 两行，变化量 δ<sub>w</sub><sup>T</sup>z = s(z<sub>o</sub> − (Pz)<sub>w</sub>)/(d̂<sub>w</sub>+s)，其中 s=+1 表示加边、−1 表示删边，o 是另一端。由秩 2 的 Woodbury 恒等式，切换后的间隔恰为 m + (1−α)α [x<sub>u</sub>, x<sub>v</sub>] (I−αS)<sup>−1</sup> [b<sub>u</sub>; b<sub>v</sub>]。其中 2×2 矩阵 S 只依赖 M、PM 的四个元素和度数，b 依赖 z = Mr。对全部 n(n−1)/2 个切换逐一计算并取最小值，就得到精确的单边最坏间隔。</td></tr>
+<tr><td>适用范围</td><td>n ≤ 8000 的图，全程 fp64 稠密计算（与 E7 的范围一致）。非平凡的有 6 个：Cora、CiteSeer、Texas、Wisconsin、Cornell、Actor。</td></tr>
+<tr><td>闸门 G10b</td><td>(a) 在 Texas 上，对若干目标节点枚举全部无向单边切换，逐一用全图重算，与 Woodbury 给出的间隔一致（误差 &lt; 1e-8）；(b) 在 n≤8 的随机小图上与暴力枚举一致；(c) 每个节点上 Woodbury 给出的最坏切换，经全图重算后得到同一间隔。任一项不通过则停下修复。</td></tr>
+<tr><td>选择与评估</td><td>网格、训练与 PLAN_v8 相同：α ∈ {0.1, 0.5, 0.85} × {CE, RCE, CEM}。选择准则相同，为划分 0 验证集上的 0.5·acc + 0.5·cert<sub>1</sub>，但 cert<sub>1</sub> 改用精确单边证书；平分规则不变。在划分 3–9 上，每个划分最多 1000 个测试节点（种子同 PLAN_v8），计算精确 b=1 证书。结果写入 <code>results/s09/DATASET__pippnp_exact.json</code>。</td></tr>
+</table>
+
+<h3>新增假设（不替代 H18–H20）</h3>
+<table>
+<tr><th>编号</th><th>假设</th><th>通过条件</th></tr>
+<tr><td>H18e（新的主假设）</td><td>按精确证书在验证集上选出的 π-PPNP，其 b=1 精确认证准确率低于验证集选出的不用图参照</td><td>上述 6 个数据集中至少 5 个严格更低。</td></tr>
+<tr><td>H20e</td><td>在精确证书下，低度节点更脆弱</td><td>在度 ≤1 和度 4–7 两层都至少有 30 个节点的数据集上，度 ≤1 层低于度 4–7 层，比例至少 70%。</td></tr>
+</table>
+<p>H18、H19、H20 按 PLAN_v8 照原样执行。论文中必须写明：H18 使用的局部预算证书对全局 b=1 而言过于宽松，因此即使它通过，也不构成证据；有信息量的是 H18e 和 H19。</p>
+<p>预设解读：若 H18e 不通过，即 π-PPNP 在至少 2 个小图上达到或超过参照，必须如实报告并收窄主结论。</p>
+</body></html>
